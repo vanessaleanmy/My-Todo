@@ -1,0 +1,14 @@
+<form #todoForm="ngForm" (ngSubmit)="onSubmit(todoForm)">
+    <input type="text" [(ngModel)]="newTodoItem" name="newTodoItem" placeholder="Enter a new todo item" required
+         #newTodoInput="ngModel" class="form-control" (input)="checkDuplicate()"/>
+
+    <div *ngIf="newTodoInput.errors?.['required'] && newTodoInput.touched" class="text-danger">
+        This field is required.
+    </div>
+    <div *ngIf="duplicateError" class="text-danger">
+        This todo item already exists.
+    </div>
+    <button type="submit" class="btn btn-primary mt-2" [disabled]="todoForm.invalid || duplicateError">
+        Add
+    </button>
+</form>

@@ -1,0 +1,27 @@
+<div class="container">  
+    <div class="mb-5 mt-2">        
+        <app-todo-add [existingTodos]="existingTodoItems" (todoAdded)="addTodo($event)"></app-todo-add>
+    </div>
+    
+    <h4>My Todo List</h4>
+    <table class="table table-striped" *ngIf="todos && todos.length>0">
+        <thead>
+            <tr>
+                <th scope="col">Mark as done</th>
+                <th scope="col"></th>                
+                <th scope="col"></th>            
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let todo of todos">
+                <th scope="row"><mat-checkbox aria-label="Mark as done" [(ngModel)]="todo.isDone"  (change)="onCheckboxChange(todo)"></mat-checkbox></th>
+                <td >{{todo.item}}</td>                            
+                <td><button class="btn btn-sm" (click)="promptDelete(todo)"><mat-icon [ngStyle]="{'color': 'red' }" aria-label="Delete Todo">delete</mat-icon></button></td>            
+            </tr>        
+        </tbody>
+    </table>
+    <label *ngIf="!todos || todos.length<1">Great job! Nothing in the to do list!</label>    
+
+    <app-confirm-delete *ngIf="itemToDelete" [itemName]="itemToDelete.item" (confirmed)="confirmDelete($event)">
+    </app-confirm-delete>
+</div>
